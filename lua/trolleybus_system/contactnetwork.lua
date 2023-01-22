@@ -3002,7 +3002,7 @@ local CONTACT_NETWORK_OBJECT = {
 			visframe,vistrace = frame,trace
 		end
 
-		if !vistrace.StartSolid and self.Cfg.ShouldBeVisible and self.Cfg:ShouldBeVisible(self.Data,Trolleybus_System.EyePos(),Trolleybus_System.GetPlayerSetting("CNObjectsDrawDistance")) then
+		if vistrace and !vistrace.StartSolid and self.Cfg.ShouldBeVisible and self.Cfg:ShouldBeVisible(self.Data,Trolleybus_System.EyePos(),Trolleybus_System.GetPlayerSetting("CNObjectsDrawDistance")) then
 			if !IsValid(self.CModel) then
 				self.CModel = self.Cfg:SetupModel(self.Data)
 				self.Cfg:UpdateModel(self.Data,self.CModel)
