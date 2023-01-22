@@ -1,0 +1,18 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/trafficcars/paz3205/lights"
+	$surfaceprop Metal
+
+	$translucent 1
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+	$envmapsaturation 0
+	$envmapfresnel 1
+
+	$phong 1
+	$phongfresnelranges "[0.54 0.77 1]"
+	$phongexponent 5
+	$phongboost 0.64
+	$phongalbedoboost 0.81
+}

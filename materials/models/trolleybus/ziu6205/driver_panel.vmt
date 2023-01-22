@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu6205/driver_panel"
+	$bumpmap "models/trolleybus/ziu6205/driver_panel_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.01 0.01 0.01]"
+	$envmapfresnel 1
+
+	$phong 1
+	$phongfresnelranges "[0.43 0.71 1]"
+	$phongtint "[0.18 0.18 0.18]"
+	$phongexponent 256
+	$phongboost 0.51
+}

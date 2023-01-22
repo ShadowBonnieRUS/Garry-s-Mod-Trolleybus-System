@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/aksm101ps/stuff2"
+	$bumpmap "models/trolleybus/aksm101ps/stuff2_normal"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+	$envmapfresnel 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/aksm101ps/stuff2_roughness"
+	$phongfresnelranges "[0.24 0.62 1]"
+	$phongtint "[0.15 0.15 0.15]"
+	$phongboost 0.88
+}

@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682v/skins/body_interior/ohra/interior"
+	$bumpmap "models/trolleybus/ziu682v/interior_normal"
+	$surfaceprop Default
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.02 0.02 0.02]"
+	$envmapsaturation 0.81
+	$envmapfresnel 0.55
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongtint "[0.18 0.18 0.18]"
+	$phongexponent 55
+	$phongboost 1.11
+}

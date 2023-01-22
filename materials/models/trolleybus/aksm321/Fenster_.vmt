@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/trolleybus/aksm321/Fenster_"
+	"$translucent" 1
+	
+	"$bumpmap" "models/trolleybus/aksm321/normal"
+	"$phong" "1"
+	"$phongexponent" "150"
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[0.1 0 0]"
+	
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.1 0.1 0.1]"
+}

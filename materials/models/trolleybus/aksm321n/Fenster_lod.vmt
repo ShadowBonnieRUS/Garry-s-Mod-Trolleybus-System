@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/trolleybus/aksm321n/Fenster"
+	"$translucent" 1
+}

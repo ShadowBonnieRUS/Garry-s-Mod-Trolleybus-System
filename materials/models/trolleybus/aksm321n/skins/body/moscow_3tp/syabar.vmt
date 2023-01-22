@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/trolleybus/aksm321n/skins/body/moscow_3tp/syabar"
+	
+	"$bumpmap" "models/trolleybus/aksm321n/normal"
+	"$phong" "1"
+	"$phongexponent" "1"
+	"$phongboost"	"3"
+	"$phongfresnelranges"	"[0.01 0.25 1]"
+}

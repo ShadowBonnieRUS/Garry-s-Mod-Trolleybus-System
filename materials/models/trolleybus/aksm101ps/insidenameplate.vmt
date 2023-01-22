@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/aksm101ps/insidenameplate"
+	$bumpmap "models/trolleybus/aksm101ps/insidenameplate_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+	$envmapfresnel -0.02
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/aksm101PS/insidenameplate_r"
+	$phongfresnelranges "[0.09 0.55 1]"
+	$phongtint "[0.61 0.61 0.61]"
+	$phongboost 1.11
+	$phongalbedoboost 2.46
+}

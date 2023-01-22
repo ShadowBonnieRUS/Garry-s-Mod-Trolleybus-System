@@ -1,0 +1,6 @@
+UnlitGeneric
+{
+	$basetexture "models/trolleybus/trafficlight/traffic_lense_led_numbers_green"
+
+	$translucent 1
+}

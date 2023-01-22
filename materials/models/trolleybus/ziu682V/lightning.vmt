@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682v/lightning"
+	$bumpmap "models/trolleybus/ziu682v/lightning_normal"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongexponent 5
+}

@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/trolleybus/contactnetwork/trolleybus_switch_01"
+	"$model" "1"
+	"$phong" "0"
+	"$bumpmap" 	"models/trolleybus/contactnetwork/trolleybus_switch_01_n"
+
+	"$phongexponenttexture" "models/trolleybus/contactnetwork/trolleybus_switch_01_r"
+	"$phongboost" 1.1
+	"$phongfresnelranges" "[1 1 1]"
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.2 .2 .2]"
+	"$envmapsaturation" ".01"
+	"$envmapcontrast" "0.1"
+	"envmapFresnel" "1"
+	$normalmapalphaenvmapmask 1
+}

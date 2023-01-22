@@ -1,0 +1,19 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/contactnetwork/crossTram/crossTram"
+	$bumpmap "models/trolleybus/contactnetwork/crossTram/crossTram_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0 0 0]"
+	$envmapsaturation 0
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 0.97
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/contactnetwork/crossTram/crossTram_r"
+	$phongfresnelranges "[0.27 0.54 3]"
+	$phongalbedotint 1
+	$phongboost 5.7
+	$phongalbedoboost 171
+}

@@ -1,0 +1,14 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682V/routeplate"
+	$bumpmap "models/trolleybus/ziu682V/routeplate_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongtint "[0.48 0.48 0.48]"
+	$phongexponent 5
+	$phongboost 1.25
+}

@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682V/wheels_front"
+	$bumpmap "models/trolleybus/ziu682v/wheels_front_normal"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.01 0.01 0.01]"
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 1
+
+	$phong 1
+	$phongfresnelranges "[0.23 0.61 1]"
+	$phongtint "[0.38 0.38 0.38]"
+	$phongexponent 462
+	$phongboost 0.27
+}

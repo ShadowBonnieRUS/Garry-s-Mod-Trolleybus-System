@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/contactnetwork/lods/trolleybus_automatic_switch_01"
+
+	$model 1
+	envmapfresnel 1
+}

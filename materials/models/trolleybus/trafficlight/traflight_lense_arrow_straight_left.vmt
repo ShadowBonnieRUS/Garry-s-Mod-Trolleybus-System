@@ -1,0 +1,42 @@
+Refract
+{
+	$envmap "env_cubemap"
+	$envmaptint "[0.22 0.22 0.22]"
+	$envmapsaturation 0
+	$fresnelreflection 0
+
+	$refract 1
+	$normalmap "models/trolleybus/trafficlight/traflight_lense_n"
+	$refracttinttexture "models/trolleybus/trafficlight/traflight_lense_arrow_straight_left"
+	$bluramount 1
+
+	%tooltexture "models/trolleybus/trafficlight/traflight_lense_n"
+
+	$model 1
+	$refractamountdef 0.1
+	$refractdist 0
+
+	Proxies
+	{
+		PlayerProximity
+		{
+			scale 0.0005
+			resultVar "$refractdist"
+		}
+
+		Subtract
+		{
+			srcVar1 "$refractamountdef"
+			srcVar2 "$refractdist"
+			resultVar "$refractamount"
+		}
+
+		Clamp
+		{
+			srcVar1 "$refractamount"
+			min 0
+			max "$refractamountdef"
+			resultVar "$refractamount"
+		}
+	}
+}

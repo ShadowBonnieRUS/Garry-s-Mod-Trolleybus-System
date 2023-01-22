@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu6205/bottom"
+	$bumpmap "models/trolleybus/ziu6205/bottom_n"
+
+	$phong 1
+	$phongfresnelranges "[0.28 0.64 1]"
+	$phongtint "[0.56 0.56 0.56]"
+	$phongexponent 64
+	$phongboost 0.81
+}

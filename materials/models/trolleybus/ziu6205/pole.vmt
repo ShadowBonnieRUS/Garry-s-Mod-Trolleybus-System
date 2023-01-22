@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu6205/pole"
+	$bumpmap "models/trolleybus/ziu6205/pole_n"
+	$surfaceprop Metal
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.01 0.01 0.01]"
+	$envmapsaturation 0.82
+	$envmapfresnel 0.06
+
+	$phong 1
+	$phongfresnelranges "[0.24 0.62 1]"
+	$phongtint "[0.33 0.33 0.33]"
+	$phongexponent 240
+	$phongboost 1.65
+}

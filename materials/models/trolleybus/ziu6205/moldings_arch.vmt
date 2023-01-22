@@ -1,0 +1,10 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu6205/moldings_arch"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.87 0.87 0.87]"
+	$envmapcontrast 1
+	$envmapsaturation 0.56
+	$envmapfresnel 1
+}

@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu6205/skins/body/cherkassy/interior_trailer"
+	$bumpmap "models/trolleybus/ziu6205/interior_trailer_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.01 0.01 0.01]"
+	$envmapcontrast 1
+	$envmapfresnel 1
+
+	$phong 1
+	$phongfresnelranges "[0.17 0.58 1]"
+	$phongtint "[0.26 0.26 0.26]"
+	$phongexponent 256
+	$phongboost 1.42
+}

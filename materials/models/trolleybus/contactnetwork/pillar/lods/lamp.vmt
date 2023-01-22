@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/contactnetwork/pillar/lods/lamp"
+
+	$model 1
+}

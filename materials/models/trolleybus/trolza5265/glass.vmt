@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/trolza5265/glass"
+	$translucent 1
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.40 0.40 0.40]"
+	$envmapcontrast 0.35
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongexponent 5
+	$phongboost 1.32
+
+	$allowalphatocoverage 1
+	$model 1
+}

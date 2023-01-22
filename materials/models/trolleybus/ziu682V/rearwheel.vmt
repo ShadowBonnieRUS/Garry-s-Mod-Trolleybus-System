@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682v/rearwheel"
+	$bumpmap "models/trolleybus/ziu682v/rearwheel_normal"
+	$surfaceprop Rubber
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongtint "[0.27 0.27 0.27]"
+	$phongexponent 91
+	$phongboost 0.27
+}

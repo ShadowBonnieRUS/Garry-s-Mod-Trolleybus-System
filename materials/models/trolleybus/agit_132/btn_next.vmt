@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/trolleybus/agit_132/btn_next"
+	"$model" "1"
+	"$phong" "1"
+	"$bumpmap"  "models/trolleybus/agit_132/agit_n"
+
+	"$phongexponenttexture" "models/trolleybus/agit_132/btn_r"
+	"$phongboost" "1"
+	"$phongfresnelranges" "[1 1 1]"
+}

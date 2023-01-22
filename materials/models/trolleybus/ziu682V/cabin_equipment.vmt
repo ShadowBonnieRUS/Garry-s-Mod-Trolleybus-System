@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682V/cabin_equipment"
+	$bumpmap "models/trolleybus/ziu682V/cabin_equipment_normal"
+	$surfaceprop Metal
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/ziu682V/cabin_equipment_roughness"
+	$phongfresnelranges "[0.54 0.77 1]"
+	$phongboost 1.15
+}

@@ -1,0 +1,29 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/reverse/reverse_silver"
+	$bumpmap "models/trolleybus/reverse/reverse_n"
+	$surfaceprop Default
+
+	$alpha 0.14
+	$alphatest 1
+	$alphatestreference 0.5
+	$nocull 1
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.30 0.30 0.30]"
+	$envmapcontrast 1
+	$envmapsaturation 0
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/reverse/reverse_r"
+	$phongfresnelranges "[0.22 0.24 1]"
+	$phongtint "[0.87 0.87 0.87]"
+	$halflambert 1
+	$phongboost 1.3
+	$phongalbedoboost 0
+
+	$allowalphatocoverage 1
+}

@@ -1,0 +1,20 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/contactnetwork/wire/wire"
+	$bumpmap "models/trolleybus/contactnetwork/wire/wire_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0 0 0]"
+	$envmapsaturation 0
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/contactnetwork/wire/wire_r"
+	$phongfresnelranges "[0.43 0.64 3]"
+	$phongtint "[0.65 0.89 0.89]"
+	$phongalbedotint 1
+	$phongboost 6.35
+	$phongalbedoboost 171
+}

@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682v/windows"
+
+	$translucent 1
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.63 0.75 0.77]"
+	$envmapcontrast 0.3
+
+	$phong 1
+	$phongfresnelranges "[0.49 0.74 1]"
+	$phongexponent 5
+	$phongboost 8
+}

@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ziu682v/skins/body_interior/2274/moldings"
+	$bumpmap "models/trolleybus/ziu682v/moldings_normal"
+
+	$phong 1
+	$phongfresnelranges "[0.68 0.84 1]"
+	$phongtint "[0.64 0.99 1]"
+	$phongexponent 1
+	$phongboost 1.59
+}

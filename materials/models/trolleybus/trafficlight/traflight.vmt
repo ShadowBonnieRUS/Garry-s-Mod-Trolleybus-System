@@ -1,0 +1,17 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/trafficlight/traflight"
+	$bumpmap "models/trolleybus/trafficlight/traflight_n"
+	$surfaceprop Plastic
+
+	$envmap "env_cubemap"
+	$envmaptint "[0 0 0]"
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/trafficlight/traflight_r"
+	$phongfresnelranges "[0.1 0.55 1]"
+	$phongboost 1.42
+}

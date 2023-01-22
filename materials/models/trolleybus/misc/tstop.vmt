@@ -1,0 +1,22 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/misc/tstop"
+	$bumpmap "models/trolleybus/misc/tstop_normal"
+	$surfaceprop Metal
+
+	$envmap "env_cubemap"
+	$envmaptint "[0 0 0]"
+	$envmapsaturation 0
+	$envmapfresnel 0.91
+	$envmapanisotropy 1
+	$envmapanisotropyscale 0.97
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/misc/tstop_roughness"
+	$phongfresnelranges "[1 1 3]"
+	$phongalbedotint 1
+	$phongboost 0.74
+	$phongalbedoboost 171
+
+	$model 1
+}

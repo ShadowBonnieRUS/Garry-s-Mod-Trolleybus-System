@@ -1,0 +1,19 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/contactnetwork/suspension/suspension"
+	$bumpmap "models/trolleybus/contactnetwork/suspension/suspension_n"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0 0 0]"
+	$envmapsaturation 0
+	$envmapfresnel 1
+	$envmapanisotropy 1
+	$envmapanisotropyscale 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/contactnetwork/suspension/suspension_r"
+	$phongfresnelranges "[0.24 0.52 3]"
+	$phongalbedotint 1
+	$phongboost 5.16
+	$phongalbedoboost 171
+}

@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/ir2002/announcer_ir2002"
+	$bumpmap "models/trolleybus/ir2002/announcer_ir2002_N"
+	$surfaceprop Default
+	
+	$phong 1
+	$phongexponenttexture "models/trolleybus/ir2002/announcer_ir2002_R"
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongboost 0.3
+}

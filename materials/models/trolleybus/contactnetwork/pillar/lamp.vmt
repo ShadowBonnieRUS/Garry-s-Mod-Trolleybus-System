@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/contactnetwork/pillar/lamp"
+	$bumpmap "models/trolleybus/contactnetwork/pillar/lamp_n"
+
+	$envmap "env_cubemap"
+	$normalmapalphaenvmapmask 1
+	$envmaptint "[0.02 0.02 0.02]"
+	$envmapcontrast 0.1
+
+	$model 1
+	envmapfresnel 0
+}

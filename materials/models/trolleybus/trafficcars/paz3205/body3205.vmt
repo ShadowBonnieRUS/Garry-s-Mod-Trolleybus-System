@@ -1,0 +1,23 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/trafficcars/paz3205/body3205"
+	$bumpmap "models/trolleybus/trafficcars/paz3205/body3205_n"
+	$surfaceprop Metal
+
+	$alphatest 1
+	$alphatestreference 0.5
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.03 0.03 0.03]"
+	$envmapsaturation 0
+	$envmapfresnel 1
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/trafficcars/paz3205/body3205_r"
+	$phongfresnelranges "[0.27 0.64 1]"
+	$phongtint "[0.53 0.53 0.53]"
+	$phongboost 0.51
+	$phongalbedoboost 3.98
+
+	$allowalphatocoverage 1
+}

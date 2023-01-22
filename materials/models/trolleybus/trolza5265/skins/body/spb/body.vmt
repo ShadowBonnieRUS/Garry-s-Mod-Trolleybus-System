@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$basetexture "models/trolleybus/trolza5265/skins/body/spb/body"
+	$bumpmap "models/trolleybus/trolza5265/body_n"
+	$surfaceprop Metal
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.02 0.02 0.02]"
+
+	$phong 1
+	$phongexponenttexture "models/trolleybus/trolza5265/body_r"
+	$phongfresnelranges "[0.4 0.7 1]"
+	$phongboost 0.47
+
+	$model 1
+}
