@@ -1,4 +1,5 @@
-# Garry's Mod: Trolleybus System Simulator Addon
+# Garry's Mod: Trolleybus System Simulator Addon.
+## Version: Beta 1.0
 
 Trolleybus Simulator addon for Garry's Mod.
 
