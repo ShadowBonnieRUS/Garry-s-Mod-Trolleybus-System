@@ -1398,6 +1398,8 @@ local function StartCopyObjects(pnl,data)
 
 			for k,v in pairs(data) do
 				local model = Trolleybus_System.ContactNetwork.CreateFromTransmitData(v.Data)
+				if !model then continue end
+
 				table.insert(self.Models,model)
 
 				local p,a = LocalToWorld(v.Pos,v.Ang,pos,ang)

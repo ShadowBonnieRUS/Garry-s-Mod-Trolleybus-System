@@ -3207,6 +3207,8 @@ function Trolleybus_System.ContactNetwork.CreateFromTransmitData(data)
 	elseif data.Class==1 then
 		object = Trolleybus_System.ContactNetwork.CreateSuspensionAndOther(data.Type,Vector(),Angle())
 	end
+
+	if !object then return end
 	
 	for k,v in pairs(data.Properties) do
 		object:SetProperty(k,v)
@@ -3220,11 +3222,13 @@ end
 function Trolleybus_System.ContactNetwork.AddObject(name,data)
 	Trolleybus_System.ContactNetwork.RemoveObject(name)
 
-	local objtype = Trolleybus_System.ContactNetwork.Objects[data.Class==0 and "Contacts" or data.Class==1 and "SuspensionAndOther"]
-	objtype[name] = Trolleybus_System.ContactNetwork.CreateFromTransmitData(data)
-	objtype[name]:InitializeNetworkDataTable(name)
+	local object = Trolleybus_System.ContactNetwork.CreateFromTransmitData(data)
+	if !object then return end
 
-	return objtype[name]
+	Trolleybus_System.ContactNetwork.Objects[data.Class==0 and "Contacts" or data.Class==1 and "SuspensionAndOther"][name] = object
+	object:InitializeNetworkDataTable(name)
+
+	return object
 end
 
 function Trolleybus_System.ContactNetwork.NewObject(class,type,pos,ang)

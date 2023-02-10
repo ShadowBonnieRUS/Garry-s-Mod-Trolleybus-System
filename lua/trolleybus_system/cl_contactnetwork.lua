@@ -37,9 +37,13 @@ Trolleybus_System.ReceiveMassiveData("ContactNetwork",function(data)
 	if data.Connections then
 		for k,v in pairs(data.Connections) do
 			local obj = Trolleybus_System.ContactNetwork.GetObject(k)
+			if !obj then continue end
 
 			for k2,v2 in pairs(v) do
-				obj:ConnectConnectableTo(k2,Trolleybus_System.ContactNetwork.GetObject(v2[1]),v2[2])
+				local obj2 = Trolleybus_System.ContactNetwork.GetObject(v2[1])
+				if !obj2 then continue end
+
+				obj:ConnectConnectableTo(k2,obj2,v2[2])
 			end
 		end
 
