@@ -786,7 +786,7 @@ end)
 function Trolleybus_System.IsButtonsDown(btns,any)
 	if istable(btns) then
 		for i=1,#btns do
-			if !input.IsButtonDown(btns) then
+			if !input.IsButtonDown(btns[i]) then
 				if !any then return false end
 			else
 				if any then return true end
