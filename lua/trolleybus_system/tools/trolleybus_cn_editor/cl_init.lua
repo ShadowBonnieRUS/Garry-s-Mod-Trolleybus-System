@@ -739,24 +739,25 @@ function TOOL:Render()
 	
 	if table.IsEmpty(self:GetSelectedConnectables()) then
 		local name,obj = next(self:GetSelectedObjects())
-		local color = Color(100,200,0)
+		local colorp = Color(150,200,0)
+		local colorn = Color(200,150,0)
+		local colord = Color(200,0,0)
 		
 		if obj and obj.Class.Id==0 and !next(self:GetSelectedObjects(),name) then
 			for i=1,obj:GetWiresCount() do
-				local starti = obj.Cfg.VoltageSource and 1 or obj:GetConnectableByWire(i,false)
-				local endi = obj.Cfg.VoltageSource and 2 or obj:GetConnectableByWire(i,true)
+				local start = obj:GetWirePos(i,false)
+				local endp = obj:GetWirePos(i,true)
 
-				if starti and endi then
+				if start and endp then
 					local voltage,positive = obj:GetWireVoltage(i)
-					local start = obj:GetConnectablePos(starti)
-					local endp = obj:GetConnectablePos(endi)
+					local volt = positive and voltage or -voltage
 
-					self:DrawLine(start,endp,color)
+					render.DrawLine(start,endp,volt>0 and colorp or volt<0 and colorn or colord)
 
 					local voltsrc = obj:GetWireLinkedVoltageSource(i)
 					local voltname = voltsrc and Trolleybus_System.ContactNetwork.GetObjectName(voltsrc) or "-"
 
-					debugoverlay.Text((start+endp)/2,Format("%i. %s%.1f V (source: %s)",i,obj:GetWirePolarity(i) and "+" or "-",positive and voltage or -voltage,voltname),0.1,false)
+					debugoverlay.Text((start+endp)/2,Format("%i. %s%.1f V (src: %s)",i,obj:GetWirePolarity(i) and "+" or "-",volt,voltname),0.1,false)
 				end
 			end
 		end

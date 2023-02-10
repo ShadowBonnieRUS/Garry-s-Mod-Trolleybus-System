@@ -136,23 +136,6 @@ local function ChangeMainPosByChangingLocalPosLocal(mpos,mang,lpos,lang,npos,nan
 	return ChangeMainPosByChangingLocalPos(mpos,mang,opos,oang,npos,nang)
 end
 
-local loop
-local function LoopSavedCalcWheelData(cwire,self,data,polepos,polelen,endpos,nwire,simplepos)
-	local lop = loop
-	if !lop then loop = {} end
-
-	loop[cwire] = true
-
-	local dt
-	if !loop[nwire] then
-		dt = self:CalculateWheelData(data,polepos,polelen,endpos,nwire,simplepos)
-	end
-
-	if !lop then loop = nil end
-
-	return dt
-end
-
 local function PlayContactSound(bus,pos,snd)
 	local speed = math.abs(bus:GetMoveSpeed())
 	
@@ -208,6 +191,9 @@ Trolleybus_System.ContactNetwork.Types = {
 					end,
 				},
 			},
+			Wires = {
+				{Start = 1,End = 2},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Start = {pos,ang}
 				data.End = {pos+ang:Forward()*10,ang}
@@ -256,9 +242,8 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetAngles = function(self,data)
 				return (data.End[1]-data.Start[1]):Angle()
 			end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local startp,endp = data.Start,data.End
-				local errend,pos,ang = WheelPosOnLine(startp[1],endp[1],polepos,polelen,endpos)
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
+				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
 					return pos and {pos = pos,ang = ang} or nil
@@ -268,15 +253,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self)
-				return 1
-			end,
-			GetWireByConnectable = function(self,connectable)
-				return 1,connectable==2
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return endpos and 2 or 1
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {1}
@@ -341,6 +317,9 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 2},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Start = pos
 				data.End = pos+ang:Forward()*20
@@ -411,15 +390,6 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetAngles = function(self,data)
 				return (data.End-data.Start):Angle()
 			end,
-			GetWiresCount = function(self)
-				return 1
-			end,
-			GetWireByConnectable = function(self,connectable)
-				return 1,connectable==2
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return endpos and 2 or 1
-			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {1}
 			end,
@@ -461,6 +431,7 @@ Trolleybus_System.ContactNetwork.Types = {
 					end,
 				},
 			},
+			Wires = {},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -540,8 +511,6 @@ Trolleybus_System.ContactNetwork.Types = {
 			end,
 			GetPosition = function(self,data) return data.Pos end,
 			GetAngles = function(self,data) return data.Ang end,
-			GetWiresCount = function(self) return 1 end,
-			GetWireByConnectable = function(self,connectable) return 1,connectable==2 end,
 			GetVoltage = function(self,data)
 				return data.NW.GetVar("Disabled") and 0 or Trolleybus_System.ContactNetwork.GetVoltage()*(data.Power or 1)
 			end,
@@ -561,6 +530,10 @@ Trolleybus_System.ContactNetwork.Types = {
 			lsusp = {
 				Vector(35.12,14.05,1.66),Vector(35.10,-13.16,1.66),Vector(50.64,15.54,1.66),Vector(50.63,-14.65,1.66),
 				Vector(89.73,2.21,1.43),Vector(89.73,-5.01,1.43)
+			},
+			lnwires = {
+				{{9,10},{11,12,true},nil,nil,6,7,nil,nil,3,4,5,8},
+				{nil,nil,9,11,10,5,6,12,{1,nil},{nil,1},{2,nil,true},{nil,2,true}},
 			},
 			ConnectablePositions = {
 				{
@@ -613,6 +586,20 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = function(self,data) return self.ldata[7],true end},
+				{Start = 2,End = function(self,data) return self.ldata[8],true end},
+				{Start = function(self,data) return self.ldata[11],true end,End = 3},
+				{Start = function(self,data) return self.ldata[13],true end,End = 4},
+				{Start = function(self,data) return self.ldata[12],true end,End = function(self,data) return self.ldata[9],true end},
+				{Start = function(self,data) return self.ldata[9],true end,End = function(self,data) return self.ldata[10],true end},
+				{Start = function(self,data) return self.ldata[10],true end,End = 5},
+				{Start = function(self,data) return self.ldata[14],true end,End = 6},
+				{Start = function(self,data) return self.ldata[7],true end,End = function(self,data) return self.ldata[11],true end},
+				{Start = function(self,data) return self.ldata[7],true end,End = function(self,data) return self.ldata[12],true end},
+				{Start = function(self,data) return self.ldata[8],true end,End = function(self,data) return self.ldata[13],true end},
+				{Start = function(self,data) return self.ldata[8],true end,End = function(self,data) return self.ldata[14],true end},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -653,13 +640,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = self.ldata[wire==1 and 1 or wire==2 and 2 or wire==3 and 11 or wire==4 and 13 or wire==5 and 12 or wire==6 and 9 or wire==7 and 10 or wire==8 and 14 or (wire==9 or wire==10) and 7 or (wire==11 or wire==12) and 8]
-				local endp = self.ldata[wire==1 and 7 or wire==2 and 8 or wire==3 and 3 or wire==4 and 4 or wire==5 and 9 or wire==6 and 10 or wire==7 and 5 or wire==8 and 6 or wire==9 and 11 or wire==10 and 12 or wire==11 and 13 or wire==12 and 14]
-
-				start = LocalToWorld(start,angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(endp,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -667,41 +648,21 @@ Trolleybus_System.ContactNetwork.Types = {
 				else
 					if pos then return {pos = pos,ang = ang,wire = wire} end
 					if errend==nil then return end
-					
-					local ldir = data.NW.GetVar("LeftDir",false)
-					local rdir = data.NW.GetVar("RightDir",false)
 
-					local nwire = errend and
-						(wire==1 and (ldir and 9 or 10) or wire==2 and (rdir and 11 or 12) or wire==5 and 6 or wire==6 and 7 or wire==9 and 3 or wire==10 and 5 or wire==11 and 4 or wire==12 and 8)
-						or !errend and
-						(wire==(ldir and 9 or 10) and 1 or wire==(rdir and 11 or 12) and 2 or wire==6 and 5 or wire==7 and 6 or wire==3 and 9 or wire==4 and 11 or wire==5 and 10 or wire==8 and 12)
+					local ndata = self.lnwires[errend and 1 or 2][wire]
+					local nwire = ndata
+
+					if istable(ndata) then
+						local dir = data.NW.GetVar(ndata[3] and "RightDir" or "LeftDir",false)
+						nwire = Either(dir,ndata[1],ndata[2])
+					end
 					
 					if nwire then
-						return LoopSavedCalcWheelData(wire,self,data,polepos,polelen,endpos,nwire,simplepos)
+						return nwire
 					else
 						return {error = 1,wire = wire,endpos = errend}
 					end
 				end
-			end,
-			GetWiresCount = function(self) return 12 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					connectable==1 and 1 or
-					connectable==2 and 2 or
-					connectable==3 and 3 or
-					connectable==4 and 4 or
-					connectable==5 and 7 or
-					connectable==6 and 8,
-					connectable==3 or connectable==4 or connectable==5 or connectable==6
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and !endpos and 1 or
-					wire==2 and !endpos and 2 or
-					wire==3 and endpos and 3 or
-					wire==4 and endpos and 4 or
-					wire==7 and endpos and 5 or
-					wire==8 and endpos and 6
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return
@@ -764,6 +725,10 @@ Trolleybus_System.ContactNetwork.Types = {
 			lsusp = {
 				Vector(4.79,14.06,1.66),Vector(20.32,15.53,1.66),Vector(4.76,-13.11,1.66),Vector(20.31,-14.59,1.67)
 			},
+			lnwires = {
+				{nil,nil,1,5,6,2,1,2},
+				{{nil,3,7},{nil,6,8},nil,nil,4,5,nil,nil},
+			},
 			ConnectablePositions = {
 				{
 					GetPosition = function(self,data) return LocalToWorld(self.ldata[1],angle_zero,data.Pos,data.Ang) end,
@@ -807,6 +772,16 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = function(self,data) return self.ldata[8],true end,End = 2},
+				{Start = function(self,data) return self.ldata[7],true end,End = 1},
+				{Start = 6,End = function(self,data) return self.ldata[8],true end},
+				{Start = 5,End = function(self,data) return self.ldata[10],true end},
+				{Start = function(self,data) return self.ldata[10],true end,End = function(self,data) return self.ldata[9],true end},
+				{Start = function(self,data) return self.ldata[9],true end,End = function(self,data) return self.ldata[7],true end},
+				{Start = 4,End = function(self,data) return self.ldata[8],true end},
+				{Start = 3,End = function(self,data) return self.ldata[7],true end},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -828,13 +803,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = self.ldata[wire==1 and 8 or wire==2 and 7 or wire==3 and 6 or wire==4 and 5 or wire==5 and 10 or wire==6 and 9 or wire==7 and 4 or wire==8 and 3]
-				local endp = self.ldata[wire==1 and 2 or wire==2 and 1 or (wire==3 or wire==7) and 8 or wire==4 and 10 or wire==5 and 9 or (wire==6 or wire==8) and 7]
-
-				start = LocalToWorld(start,angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(endp,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -843,39 +812,19 @@ Trolleybus_System.ContactNetwork.Types = {
 					if pos then return {pos = pos,ang = ang,wire = wire} end
 					if errend==nil then return end
 
-					local rand = math.random(1,3)
+					local ndata = self.lnwires[errend and 1 or 2][wire]
+					local nwire = ndata
 
-					local nwire = errend and
-						((wire==3 or wire==7) and 1 or wire==4 and 5 or wire==5 and 6 or (wire==6 or wire==8) and 2)
-						or !errend and
-						(wire==1 and (rand==1 and 3 or rand==2 and 7 or nil) or wire==2 and (rand==1 and 6 or rand==2 and 8 or nil) or wire==6 and 5 or wire==5 and 4)
+					if istable(ndata) then
+						nwire = ndata[math.random(#ndata)]
+					end
 					
 					if nwire then
-						return LoopSavedCalcWheelData(wire,self,data,polepos,polelen,endpos,nwire,simplepos)
+						return nwire
 					else
 						return {error = 1,wire = wire,endpos = errend}
 					end
 				end
-			end,
-			GetWiresCount = function(self) return 8 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					connectable==1 and 2 or
-					connectable==2 and 1 or
-					connectable==3 and 8 or
-					connectable==4 and 7 or
-					connectable==5 and 4 or
-					connectable==6 and 3,
-					connectable==1 or connectable==2
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and endpos and 2 or
-					wire==2 and endpos and 1 or
-					wire==3 and !endpos and 6 or
-					wire==4 and !endpos and 5 or
-					wire==7 and !endpos and 4 or
-					wire==8 and !endpos and 3
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return
@@ -947,6 +896,9 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 2},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -963,10 +915,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			end,
 			GetPosition = function(self,data) return data.Pos end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = data.Pos
-				local endp = LocalToWorld(self.ldata[1],angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -977,13 +926,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 1 end,
-			GetWireByConnectable = function(self,connectable)
-				return 1,connectable==2
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return endpos and 2 or 1
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {}
@@ -1016,6 +958,9 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 2},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1034,10 +979,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = data.Pos
-				local endp = LocalToWorld(self.ldata,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -1048,13 +990,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 1 end,
-			GetWireByConnectable = function(self,connectable)
-				return 1,connectable==2
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return endpos and 2 or 1
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {}
@@ -1171,6 +1106,10 @@ Trolleybus_System.ContactNetwork.Types = {
 					end,
 				},
 			},
+			Wires = {
+				{Start = 1,End = 2},
+				{Start = 3,End = 4},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1203,7 +1142,7 @@ Trolleybus_System.ContactNetwork.Types = {
 				self:updateCurve(data)
 			end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local dt = data.WiresData[wire]
 				local errend,pos,ang = WheelPosAngOnCurve(dt.Center,dt.Radius,true,data.Angle,dt.Start,dt.StartAng,polepos,polelen,endpos,simplepos)
 
@@ -1216,15 +1155,6 @@ Trolleybus_System.ContactNetwork.Types = {
 						return {pos = pos,ang = ang,wire = wire}
 					end
 				end
-			end,
-			GetWiresCount = function(self) return 2 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					(connectable==1 or connectable==2) and 1 or 2,
-					connectable==2 or connectable==4
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return wire==1 and (endpos and 2 or 1) or (endpos and 4 or 3)
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {(connectable==1 or connectable==2) and 1 or 2}
@@ -1339,6 +1269,14 @@ Trolleybus_System.ContactNetwork.Types = {
 					end,
 				},
 			},
+			Wires = {
+				{Start = 1,End = function(self,data) return data.WiresData[1].Start end},
+				{Start = 3,End = function(self,data) return data.WiresData[2].Start end},
+				{Start = function(self,data) return data.WiresData[1].Start end,End = function(self,data) return data.WiresData[1].End end},
+				{Start = function(self,data) return data.WiresData[2].Start end,End = function(self,data) return data.WiresData[2].End end},
+				{Start = function(self,data) return data.WiresData[1].End end,End = 2},
+				{Start = function(self,data) return data.WiresData[2].End end,End = 4},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1383,7 +1321,7 @@ Trolleybus_System.ContactNetwork.Types = {
 				self:updateCurve(data)
 			end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos,_loop)
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				if wire==3 or wire==4 then
 					local dt = data.WiresData[wire==3 and 1 or 2]
 					local errend,pos,ang = WheelPosAngOnCurve(dt.Center,dt.Radius,true,data.Angle,dt.Start,dt.StartAng,polepos,polelen,endpos,simplepos)
@@ -1392,11 +1330,7 @@ Trolleybus_System.ContactNetwork.Types = {
 						return errend==nil and pos and {pos = pos,ang = ang} or nil
 					else
 						if errend!=nil then
-							local nwire = 
-							errend and (wire==3 and 5 or 6) or
-							!errend and (wire==3 and 1 or 2)
-						
-							return LoopSavedCalcWheelData(wire,self,data,polepos,polelen,endpos,nwire,simplepos)
+							return errend and (wire==3 and 5 or 6) or (wire==3 and 1 or 2)
 						end
 
 						if pos then
@@ -1404,13 +1338,6 @@ Trolleybus_System.ContactNetwork.Types = {
 						end
 					end
 				else
-					local isleft = wire==1 or wire==5
-					local isend = wire==5 or wire==6
-
-					local dt = data.WiresData[isleft and 1 or 2]
-					local start = isend and dt.End or dt.Start2
-					local endp = isend and dt.End2 or dt.Start
-
 					local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 					if !pos then
 						if !simplepos then
@@ -1418,9 +1345,7 @@ Trolleybus_System.ContactNetwork.Types = {
 							errend and (wire==1 and 3 or wire==2 and 4) or
 							!errend and (wire==5 and 3 or wire==6 and 4)
 
-							if nwire then
-								return LoopSavedCalcWheelData(wire,self,data,polepos,polelen,endpos,nwire,simplepos)
-							end
+							if nwire then return nwire end
 						end
 
 						return errend!=nil and {error = 1,wire = wire,endpos = errend} or nil
@@ -1428,22 +1353,6 @@ Trolleybus_System.ContactNetwork.Types = {
 
 					return {pos = pos,ang = ang,wire = wire}
 				end
-			end,
-			GetWiresCount = function(self) return 6 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					connectable==1 and 1 or
-					connectable==2 and 5 or
-					connectable==3 and 2 or
-					connectable==4 and 6,
-					connectable==2 or connectable==4
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and !endpos and 1 or
-					wire==2 and !endpos and 3 or
-					wire==5 and endpos and 2 or
-					wire==6 and endpos and 4
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return
@@ -1507,6 +1416,12 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 3},
+				{Start = 2,End = 4},
+				{Start = 5,End = 7},
+				{Start = 6,End = 8},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1525,13 +1440,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = self.ldata[wire==1 and 1 or wire==2 and 2 or wire==3 and 5 or wire==4 and 6]
-				local endp = self.ldata[wire==1 and 3 or wire==2 and 4 or wire==3 and 7 or wire==4 and 8]
-
-				start = LocalToWorld(start,angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(endp,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -1542,22 +1451,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 4 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					(connectable==1 or connectable==3) and 1 or
-					(connectable==2 or connectable==4) and 2 or
-					(connectable==5 or connectable==7) and 3 or
-					(connectable==6 or connectable==8) and 4,
-					connectable==3 or connectable==4 or connectable==7 or connectable==8
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and (endpos and 3 or 1) or
-					wire==2 and (endpos and 4 or 2) or
-					wire==3 and (endpos and 7 or 5) or
-					wire==4 and (endpos and 8 or 6)
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {}
@@ -1623,6 +1516,12 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 3},
+				{Start = 2,End = 4},
+				{Start = 5,End = 7},
+				{Start = 6,End = 8},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1641,13 +1540,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = self.ldata[wire==1 and 1 or wire==2 and 2 or wire==3 and 5 or wire==4 and 6]
-				local endp = self.ldata[wire==1 and 3 or wire==2 and 4 or wire==3 and 7 or wire==4 and 8]
-
-				start = LocalToWorld(start,angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(endp,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -1658,22 +1551,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 4 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					(connectable==1 or connectable==3) and 1 or
-					(connectable==2 or connectable==4) and 2 or
-					(connectable==5 or connectable==7) and 3 or
-					(connectable==6 or connectable==8) and 4,
-					connectable==3 or connectable==4 or connectable==7 or connectable==8
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and (endpos and 3 or 1) or
-					wire==2 and (endpos and 4 or 2) or
-					wire==3 and (endpos and 7 or 5) or
-					wire==4 and (endpos and 8 or 6)
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {}
@@ -1739,6 +1616,12 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 3},
+				{Start = 2,End = 4},
+				{Start = 5,End = 7},
+				{Start = 6,End = 8},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1757,13 +1640,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = self.ldata[wire==1 and 1 or wire==2 and 2 or wire==3 and 5 or wire==4 and 6]
-				local endp = self.ldata[wire==1 and 3 or wire==2 and 4 or wire==3 and 7 or wire==4 and 8]
-
-				start = LocalToWorld(start,angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(endp,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -1774,22 +1651,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 4 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					(connectable==1 or connectable==3) and 1 or
-					(connectable==2 or connectable==4) and 2 or
-					(connectable==5 or connectable==7) and 3 or
-					(connectable==6 or connectable==8) and 4,
-					connectable==3 or connectable==4 or connectable==7 or connectable==8
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and (endpos and 3 or 1) or
-					wire==2 and (endpos and 4 or 2) or
-					wire==3 and (endpos and 7 or 5) or
-					wire==4 and (endpos and 8 or 6)
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {(connectable==5 or connectable==7) and 3 or (connectable==6 or connectable==8) and 4 or nil}
@@ -1844,6 +1705,9 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 3,End = 4},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1862,10 +1726,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				start = LocalToWorld(self.ldata[3],angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(self.ldata[4],angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -1876,13 +1737,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 1 end,
-			GetWireByConnectable = function(self,connectable)
-				return (connectable==3 or connectable==4) and 1,connectable==4
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return endpos and 4 or 3
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {}
@@ -1957,6 +1811,14 @@ Trolleybus_System.ContactNetwork.Types = {
 				},
 			},
 			Properties = {},
+			Wires = {
+				{Start = 1,End = 3},
+				{Start = 2,End = 4},
+				{Start = 5,End = 7},
+				{Start = 6,End = 8},
+				{Start = 9,End = 11},
+				{Start = 10,End = 12},
+			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
 				data.Ang = ang
@@ -1975,13 +1837,7 @@ Trolleybus_System.ContactNetwork.Types = {
 			GetPosition = function(self,data) return data.Pos end,
 			Rotate = function(self,data,ang) data.Ang = ang end,
 			GetAngles = function(self,data) return data.Ang end,
-			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,simplepos)
-				local start = self.ldata[wire==1 and 1 or wire==2 and 2 or wire==3 and 5 or wire==4 and 6 or wire==5 and 9 or wire==6 and 10]
-				local endp = self.ldata[wire==1 and 3 or wire==2 and 4 or wire==3 and 7 or wire==4 and 8 or wire==5 and 11 or wire==6 and 12]
-
-				start = LocalToWorld(start,angle_zero,data.Pos,data.Ang)
-				endp = LocalToWorld(endp,angle_zero,data.Pos,data.Ang)
-
+			CalculateWheelData = function(self,data,polepos,polelen,endpos,wire,start,endp,simplepos)
 				local errend,pos,ang = WheelPosOnLine(start,endp,polepos,polelen,endpos)
 
 				if simplepos then
@@ -1992,26 +1848,6 @@ Trolleybus_System.ContactNetwork.Types = {
 					
 					return {error = 1,wire = wire,endpos = errend}
 				end
-			end,
-			GetWiresCount = function(self) return 6 end,
-			GetWireByConnectable = function(self,connectable)
-				return
-					(connectable==1 or connectable==3) and 1 or
-					(connectable==2 or connectable==4) and 2 or
-					(connectable==5 or connectable==7) and 3 or
-					(connectable==6 or connectable==8) and 4 or
-					(connectable==9 or connectable==11) and 5 or
-					(connectable==10 or connectable==12) and 6,
-					connectable==3 or connectable==4 or connectable==7 or connectable==8 or connectable==11 or connectable==12
-			end,
-			GetConnectableByWire = function(self,wire,endpos)
-				return
-					wire==1 and (endpos and 3 or 1) or
-					wire==2 and (endpos and 4 or 2) or
-					wire==3 and (endpos and 7 or 5) or
-					wire==4 and (endpos and 8 or 6) or
-					wire==5 and (endpos and 11 or 9) or
-					wire==6 and (endpos and 12 or 10)
 			end,
 			GetWiresToUpdateVoltage = function(self,connectable)
 				return {}
@@ -3064,6 +2900,21 @@ local CONTACT_NETWORK_CONTACT_OBJECT = table.Inherit({
 		self.Class = {Id = 0,Name = "Contact"}
 
 		self.BaseClass.Init(self,Trolleybus_System.ContactNetwork.Types.Contacts[type],pos,ang)
+
+		self.contowire = {}
+		self.wiretocon = {{},{}}
+
+		for k,v in ipairs(self.Cfg.Wires) do
+			if isnumber(v.Start) then
+				self.contowire[v.Start] = {k,false}
+				self.wiretocon[1][k] = v.Start
+			end
+
+			if isnumber(v.End) then
+				self.contowire[v.End] = {k,true}
+				self.wiretocon[2][k] = v.End
+			end
+		end
 	end,
 	GetTransmitData = function(self)
 		return table.Merge(self.BaseClass.GetTransmitData(self),{
@@ -3088,13 +2939,26 @@ local CONTACT_NETWORK_CONTACT_OBJECT = table.Inherit({
 		return self.Cfg.MainContact
 	end,
 	CalculateWheelData = function(self,polepos,polelen,endpos,wire,simplepos)
-		return self.Cfg:CalculateWheelData(self.Data,polepos,polelen,endpos,wire,simplepos)
+		local loop = {}
+
+		while !loop[wire] do
+			loop[wire] = true
+
+			local data = self.Cfg:CalculateWheelData(self.Data,polepos,polelen,endpos,wire,self:GetWirePos(wire,false),self:GetWirePos(wire,true),simplepos)
+			if !isnumber(data) then return data end
+
+			wire = data
+		end
 	end,
 	GetWireByConnectable = function(self,connectable)
-		return self.Cfg:GetWireByConnectable(connectable)
+		local wdata = self.contowire[connectable]
+
+		if wdata then
+			return wdata[1],wdata[2]
+		end
 	end,
 	GetConnectableByWire = function(self,wire,endpos)
-		return self.Cfg:GetConnectableByWire(wire,endpos)
+		return self.wiretocon[endpos and 2 or 1][wire]
 	end,
 	GetWiresToUpdateVoltage = function(self,connectable)
 		return self.Cfg:GetWiresToUpdateVoltage(connectable)
@@ -3121,8 +2985,23 @@ local CONTACT_NETWORK_CONTACT_OBJECT = table.Inherit({
 	LinkWireToVoltageSource = function(self,wire,voltsrc)
 		self:SetNWVar("voltsrc"..wire,voltsrc and Trolleybus_System.ContactNetwork.GetObjectName(voltsrc) or nil)
 	end,
+	GetWirePos = function(self,wire,endpos)
+		local pos = self.Cfg.Wires[wire][endpos and "End" or "Start"]
+		local loc = true
+
+		if pos==true then
+			pos,loc = self.Cfg:GetWirePos(self.Data,wire,endpos)
+		elseif isfunction(pos) then
+			pos,loc = pos(self.Cfg,self.Data)
+		elseif isnumber(pos) then
+			pos,loc = self:GetConnectablePos(pos),false
+		end
+		
+		if loc then pos = LocalToWorld(pos,angle_zero,self:GetPos(),self:GetAngles()) end
+		return pos
+	end,
 	GetWiresCount = function(self)
-		return self.Cfg:GetWiresCount()
+		return #self.Cfg.Wires
 	end,
 	AmperageUpdate = function(self,wire,amperage)
 		if self.Cfg.AmperageUpdate then
