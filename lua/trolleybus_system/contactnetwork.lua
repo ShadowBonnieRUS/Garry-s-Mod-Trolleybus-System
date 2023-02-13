@@ -523,6 +523,7 @@ Trolleybus_System.ContactNetwork.Types = {
 				Vector(37.53,10.08),Vector(37.53,-9.14),
 				Vector(56.10,6.86),Vector(122.87,-9.35),
 				Vector(46.82,11.02),Vector(46.82,9.17),Vector(46.81,-8.23),Vector(46.82,-10.06),
+				Vector(37.9,11.62),Vector(37.9,8.45),Vector(37.9,-7.63),Vector(37.9,-10.77),
 			},
 			langs = {
 				Angle(0,0,0),Angle(0,0,0),Angle(0,13.24,0),Angle(0,8.24,0),Angle(0,-13.94,0),Angle(0,-10.75,0),
@@ -532,7 +533,7 @@ Trolleybus_System.ContactNetwork.Types = {
 				Vector(89.73,2.21,1.43),Vector(89.73,-5.01,1.43)
 			},
 			lnwires = {
-				{{9,10},{11,12,true},nil,nil,6,7,nil,nil,3,4,5,8},
+				{{9,10},{11,12,true},nil,nil,6,7,nil,nil,3,5,4,8},
 				{nil,nil,9,11,10,5,6,12,{1,nil},{nil,1},{2,nil,true},{nil,2,true}},
 			},
 			ConnectablePositions = {
@@ -595,10 +596,10 @@ Trolleybus_System.ContactNetwork.Types = {
 				{Start = function(self,data) return self.ldata[9],true end,End = function(self,data) return self.ldata[10],true end},
 				{Start = function(self,data) return self.ldata[10],true end,End = 5},
 				{Start = function(self,data) return self.ldata[14],true end,End = 6},
-				{Start = function(self,data) return self.ldata[7],true end,End = function(self,data) return self.ldata[11],true end},
-				{Start = function(self,data) return self.ldata[7],true end,End = function(self,data) return self.ldata[12],true end},
-				{Start = function(self,data) return self.ldata[8],true end,End = function(self,data) return self.ldata[13],true end},
-				{Start = function(self,data) return self.ldata[8],true end,End = function(self,data) return self.ldata[14],true end},
+				{Start = function(self,data) return self.ldata[data.NW.GetVar("LeftDir") and 7 or 15],true end,End = function(self,data) return self.ldata[11],true end},
+				{Start = function(self,data) return self.ldata[data.NW.GetVar("LeftDir") and 16 or 7],true end,End = function(self,data) return self.ldata[12],true end},
+				{Start = function(self,data) return self.ldata[data.NW.GetVar("RightDir") and 8 or 17],true end,End = function(self,data) return self.ldata[13],true end},
+				{Start = function(self,data) return self.ldata[data.NW.GetVar("RightDir") and 18 or 8],true end,End = function(self,data) return self.ldata[14],true end},
 			},
 			Initialize = function(self,data,pos,ang)
 				data.Pos = pos
