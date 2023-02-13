@@ -50,7 +50,7 @@ Addon's API allows developers create their own trolleybuses and other elements, 
 Developers:
 * [Shadow Bonnie (RUS)](https://steamcommunity.com/id/shadowbonnierus) (Igor Platunov. Main coder, initiator of idea about trolleybuses in Garry's Mod)
 * [Ivano](https://steamcommunity.com/profiles/76561198221032424) (Ivan Opilat. Content maker, designer)
-* [Jorek](https://steamcommunity.com/id/overlord__) (Georgy Novikov. Map and content maker)
+* [Joorek](https://steamcommunity.com/id/overlord__) (Georgy Novikov. Map and content maker)
 * [Mavid](https://steamcommunity.com/profiles/76561198999620249) (David Mutolapov. Content maker, designer, provides information about real world details)
 * [Aleksei2506](https://steamcommunity.com/id/Aleksei2506) (Aleksey Dovgal. Content maker, provides information about real world details)
 
