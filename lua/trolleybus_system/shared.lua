@@ -14,7 +14,7 @@ Trolleybus_System.TracksPowerDisabled = Trolleybus_System.TracksPowerDisabled or
 Trolleybus_System.MaxTrolleybusPolesUpAng = -50
 Trolleybus_System.UnitsPerMeter = 37.777
 
-Trolleybus_System.VERSION = "Beta 1.0"
+Trolleybus_System.VERSION = "Beta 1.1"
 
 Trolleybus_System.DefaultMaps = {
 	gm_sumy_reborn = true,

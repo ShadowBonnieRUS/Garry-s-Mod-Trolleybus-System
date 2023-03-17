@@ -10,7 +10,7 @@ This work is licensed under a
 [cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
 
 # Garry's Mod: Trolleybus System
-## Version: Beta 1.0
+## Version: Beta 1.1
 
 Trolleybus Simulator addon for Garry's Mod.
 
