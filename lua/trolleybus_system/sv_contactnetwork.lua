@@ -43,10 +43,18 @@ function Trolleybus_System.ContactNetwork.Load(ply)
 
 		for k,v in pairs(network) do
 			objs[k] = Trolleybus_System.ContactNetwork.AddObject(k,v)
+
+			if !objs[k] then
+				print("Trolleybus System: Failed to load contact network object '"..k.."'")
+			end
 		end
 
 		for k,v in pairs(network) do
+			if !objs[k] then continue end
+
 			for k2,v2 in pairs(v.Connections) do
+				if !objs[v2[1]] then continue end
+
 				objs[k]:ConnectConnectableTo(k2,objs[v2[1]],v2[2])
 			end
 		end
@@ -127,15 +135,15 @@ function Trolleybus_System.ContactNetwork.UpdateWiresVoltageLinks()
 
 	for k,v in pairs(Trolleybus_System.ContactNetwork.Objects.Contacts) do
 		if v.Cfg.VoltageSource then
-			loop[v] = {[1] = true,[2] = true}
-
 			for i=1,2 do
-				local positive = i==1
-				local connections = {unpack(v:GetOtherConnections(i,true))}
+				local positive = i%2==1
+				local connections = v:GetOtherConnections(i,true)
 
 				while #connections>0 do
 					local connection = table.remove(connections,1)
 					local obj,id = connection[1],connection[2]
+					
+					if obj.Cfg.VoltageSource then continue end
 
 					for k2,v2 in ipairs(obj:GetWiresToUpdateVoltage(id)) do
 						obj:SetWirePolarity(v2,positive)
