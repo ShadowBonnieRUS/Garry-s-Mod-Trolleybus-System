@@ -22,7 +22,7 @@ Main features:
 * Map created for trolleybuses
 * Editor tools for creating infrastructure for trolleybuses
 
-Mechanics of trolleybuses based on real world. The interactive elements consist of many subsystems (engine, circuits, informers, control systems, etc). This will make you feel like a real trolleybus driver.
+Mechanics of trolleybuses based on real world. The simulated elements consist of many subsystems (engine, circuits, announcer, control systems, etc). This will make you feel like a real trolleybus driver.
 
 List of main trolleybuses:
 * ZiU-682V-013
@@ -32,7 +32,7 @@ List of main trolleybuses:
 * AKSM-333 (few mods)
 * TrolZa-5265
 
-The catenary network is strongly detailed. It contains main elements like wires, switches, crosses and etc. The trolleybuses and catenary network use electric circuit computations to simulate real world events.
+The catenary network is modelled to a high degree of detail. It contains main elements like wires, switches, crosses and etc. The trolleybuses and catenary network use electric circuit computations to simulate real world events.
 
 Players can drive trolleybus routes to transport passengers between stops, also using the passenger information system when needed. In addition, this addon contains simple traffic systems that consist of AI traffic cars and traffic lights.
 
