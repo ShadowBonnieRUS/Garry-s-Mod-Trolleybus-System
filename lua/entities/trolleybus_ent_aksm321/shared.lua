@@ -1032,33 +1032,6 @@ Trolleybus_System.BuildDialGauge(ENT,"cylinderpressure2","","prib",12.68,6.08,0,
 	return -air*11
 end,"models/trolleybus/aksm321/manometerarrow.mdl",nil,Vector(0,0,-1))
 
-/*Trolleybus_System.BuildMultiScreen(ENT,"screen","screen",0,0,400,300,3/400,function(self,data,x,y,w,h,hovered,cx,cy)
-	local utils = Trolleybus_System.MultiScreenUtils
-
-	surface.SetDrawColor(0,255,255)
-	surface.DrawRect(x,y,w,h)
-	
-	if hovered and utils.InBounds2(0,0,200,200,cx,cy) then
-		surface.SetDrawColor(255,0,0)
-	else
-		surface.SetDrawColor(255,255,0)
-	end
-	
-	surface.DrawRect(x,y,200,200)
-end,function(self,data,x,y,w,h)
-	local utils = Trolleybus_System.MultiScreenUtils
-
-	if utils.InBounds2(0,0,200,200,x,y) then
-		return "TestBox"
-	end
-end,function(self,data,ply,x,y,w,h)
-	local utils = Trolleybus_System.MultiScreenUtils
-
-	if utils.InBounds2(0,0,200,200,x,y) then
-		return print("TestBoxActivated")
-	end
-end,think,think_sv)*/
-
 Trolleybus_System.BuildMovingMirror(ENT,"left_mirror",Vector(208.61,49.67,13.67),Angle(0,-90,0),10,10,"models/trolleybus/aksm321/mirror_left.mdl",Vector(225.03,51.41,21.39),Angle(0,0,0),"Bone003","Bone004",Vector(-2,1.5,-0.3),Angle(-1,-179,-1),6.7,15,false,true,-45,45,-45,45,-10,10,-10,10,nil,10,3,0,-5)
 Trolleybus_System.BuildMovingMirror(ENT,"middle_mirror",Vector(225.52,17.97,24.87),Angle(0,-180,0),10,10,"models/trolleybus/aksm321/mirror_middle.mdl",Vector(220.13,0.15,32.88),Angle(0,0,0),"Bone001","Bone002",Vector(-1.8,0,0.3),Angle(0,-180,0),11.5,6,true,false,-35,35,-35,35,-20,10,-20,10,nil,-20,-0,-15)
 Trolleybus_System.BuildMovingMirror(ENT,"right_mirror",Vector(225,-26,7),Angle(0,-180,0),10,10,"models/trolleybus/aksm321/mirror_right.mdl",Vector(224.31,-51.86,24.72),Angle(0,0,0),"Bone001","Bone002",Vector(-2.2,-1,-0.7),Angle(2,168,-1),6.7,15,false,true,-45,45,-45,45,-10,10,-10,10,nil,-22,8,0,-2)
