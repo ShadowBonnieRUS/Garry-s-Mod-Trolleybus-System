@@ -934,15 +934,17 @@ function TOOL.BuildCPanel(pnl)
 	routes_delete:SetTextColor(Color(255,0,0))
 	routes_delete:SetText(L"tool.trolleybus_routes_editor.ui.routes.delete")
 	routes_delete.DoClick = function(self)
-		local route = routes_num.route
-		local dt = Trolleybus_System.Routes.Routes[route]
+		Trolleybus_System.ConfirmDialog(L"tool.trolleybus_routes_editor.ui.routed.confirmdelete", function()
+			local route = routes_num.route
+			local dt = Trolleybus_System.Routes.Routes[route]
 
-		if dt then
-			net.Start("Trolleybus_System.RoutesEditor")
+			if dt then
+				net.Start("Trolleybus_System.RoutesEditor")
 				net.WriteUInt(1,4)
 				net.WriteUInt(route,8)
-			net.SendToServer()
-		end
+				net.SendToServer()
+			end
+		end)
 	end
 
 	local routes_new = vgui.Create("DButton",routes)

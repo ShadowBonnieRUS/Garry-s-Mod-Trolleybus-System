@@ -1,6 +1,7 @@
 -- Copyright © Platunov I. M., 2020 All rights reserved
 
 Trolleybus_System.PassengerSize = 25
+local L = Trolleybus_System.GetLanguagePhrase
 
 local eyepos,eyeang,eyedir,eyefov = EyePos(),EyeAngles(),EyeVector(),75
 
@@ -817,4 +818,23 @@ function Trolleybus_System.ButtonsToString(btns)
 
 	local name = input.GetKeyName(btns)
 	return name and name:upper() or "?"
+end
+
+function Trolleybus_System.ConfirmDialog(text, cb)
+	local Frame = vgui.Create( "DFrame" )
+	Frame:SetPos( 5, 5 )
+	Frame:SetSize( 300, 150 )
+	Frame:SetTitle(L("confirmation"))
+	Frame:SetVisible( true )
+	Frame:SetDraggable( false )
+	Frame:ShowCloseButton( true )
+	Frame:MakePopup()
+	local Button = vgui.Create("DButton", Frame)
+	Button:SetText( text )
+	Button:SetPos( 100, 100 )
+	Button:SizeToContents()
+	Button.DoClick = function()
+		cb()
+		Frame:Remove()
+	end
 end
