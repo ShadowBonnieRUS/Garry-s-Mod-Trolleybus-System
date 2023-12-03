@@ -24,8 +24,8 @@ end
 function Trolleybus_System.BuildSkinSpawnSetting(troll,name)
 	if !Trolleybus_System.TrolleybusSkins then
 		Trolleybus_System.TrolleybusSkins = {}
-		
 		Trolleybus_System.RunEvent("AddTrolleybusSkins",Trolleybus_System.AddTrolleybusSkin)
+		Trolleybus_System.RunEvent("AddTrolleybusSkinsG017",Trolleybus_System.AddTrolleybusSkin)
 	end
 	
 	local function ChangeTextures(self,ent,skins)
