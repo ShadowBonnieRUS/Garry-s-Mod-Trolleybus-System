@@ -299,71 +299,71 @@ local function DrawTrolleybusRenderables(depth,skybox,translucent)
 	lastframe = frame
 	
 	lastinworldcheck = usecache and lastinworldcheck or util.TraceLine({start = eyepos,endpos = eyepos,mask = MASK_NPCWORLDSTATIC}).Hit
-	
+
 	if !lastinworldcheck then
 		render.SetMaterial(mat)
 		render.SetBlend(1)
-		
+
 		local DrawScale = 5
 		local tbdata = Trolleybus_System.TargetButtonData
-		
+
 		local debugdraw = translucent and Trolleybus_System.GetPlayerSetting("DebugMode")
 		lastgetallents = usecache and lastgetallents or ents.GetAll()
-		
+
 		for _,self in ipairs(lastgetallents) do
 			if self.IsTrolleybus then
 				if !self.RenderClientEnts or !Trolleybus_System.IsEntityWasDrawnThisFrame(self,translucent) then continue end
-				
+
 				local selfpos,selfang = self:GetPos(),self:GetAngles()
-				
+
 				if debugdraw then
 					for k,v in pairs(self.m_PanelsData) do
 						local pos,ang = LocalToWorld(v.pos,v.ang,selfpos,selfang)
 						ang:RotateAroundAxis(ang:Forward(),90)
 						ang:RotateAroundAxis(-ang:Right(),90)
-						
+
 						cam.Start3D2D(pos,ang,1/DrawScale)
 							surface.SetDrawColor(0,0,255,75)
 							DrawRect(0,0,v.size[1]*DrawScale,v.size[2]*DrawScale)
 						cam.End3D2D()
 					end
 				end
-				
+
 				for k,v in pairs(self.Buttons) do
 					local cfg = v.Cfg
 					local dt = cfg.panel
 					local drawfunc = Either(translucent,dt.drawtranslucent,dt.draw)
-					
+
 					if !debugdraw and !drawfunc or cfg.model and !v.Ent then continue end
-					
+
 					local panel = self.m_PanelsData[v.Panel]
 					local pos,ang = LocalToWorld(panel.pos,panel.ang,selfpos,selfang)
-					
+
 					ang:RotateAroundAxis(ang:Forward(),90)
 					ang:RotateAroundAxis(-ang:Right(),90)
-					
+
 					local drawscale = dt.drawscale or DrawScale
-					
+
 					cam.Start3D2D(pos,ang,1/drawscale)
 						local x = dt.radius and (dt.pos[1]-dt.radius)*drawscale or dt.pos[1]*drawscale
 						local y = dt.radius and (dt.pos[2]-dt.radius)*drawscale or dt.pos[2]*drawscale
-						
+
 						local w = dt.radius and dt.radius*2*drawscale or dt.size and dt.size[1]*drawscale
 						local h = dt.radius and w or dt.size and dt.size[2]*drawscale
-						
+
 						if drawfunc then
 							drawfunc(self,drawscale,x,y,w,h)
 						end
-						
+
 						if debugdraw then
 							if self:IsButtonDisabled(k) then
 								surface.SetDrawColor(128,128,128)
 							else
 								local pressed = LP:KeyDown(IN_ATTACK) and !Trolleybus_System.IsControlButtonDown("mousesteer") and !Trolleybus_System.IsControlButtonDown("viewmove")
-								
+
 								surface.SetDrawColor(tbdata.button==k and (pressed and COLORA_RED or COLORA_YELLOW) or COLORA_GREEN)
 							end
-							
+
 							if dt.radius then
 								DrawCircle(x+w/2,y+w/2,w/2)
 							elseif dt.size then
@@ -372,37 +372,37 @@ local function DrawTrolleybusRenderables(depth,skybox,translucent)
 						end
 					cam.End3D2D()
 				end
-				
+
 				for k,v in pairs(self.OtherPanelEnts) do
 					if !v.Ent then continue end
-					
+
 					local cfg = v.Cfg
 					local dt = cfg.panel
 					local drawfunc = Either(translucent,dt.draw2dtranslucent,dt.draw2d)
-					
+
 					if debugdraw or drawfunc then
 						local panel = self.m_PanelsData[v.Panel]
 						local pos,ang = LocalToWorld(panel.pos,panel.ang,selfpos,selfang)
-						
+
 						ang:RotateAroundAxis(ang:Forward(),90)
 						ang:RotateAroundAxis(-ang:Right(),90)
-						
+
 						local drawscale = dt.drawscale or DrawScale
-						
+
 						cam.Start3D2D(pos,ang,1/drawscale)
 							local x = dt.radius and (dt.pos[1]-dt.radius)*drawscale or dt.pos[1]*drawscale
 							local y = dt.radius and (dt.pos[2]-dt.radius)*drawscale or dt.pos[2]*drawscale
-							
+
 							local w = dt.radius and dt.radius*2*drawscale or dt.size and dt.size[1]*drawscale
 							local h = dt.radius and w or dt.size and dt.size[2]*drawscale
-						
+
 							if drawfunc then
 								drawfunc(self,drawscale,x,y,w,h)
 							end
-							
+
 							if debugdraw then
 								surface.SetDrawColor(COLORA_PURPLE)
-								
+
 								if dt.radius then
 									DrawCircle(x+w/2,y+w/2,w/2)
 								elseif dt.size then
@@ -411,84 +411,84 @@ local function DrawTrolleybusRenderables(depth,skybox,translucent)
 							end
 						cam.End3D2D()
 					end
-					
+
 					local drawfunc = Either(translucent,cfg.drawtranslucent,cfg.draw)
 					if drawfunc then drawfunc(self,v) end
 				end
-				
+
 				if translucent then
 					render.SetMaterial(spritemat)
-					
+
 					local turnlights = self:GetTurnSignalLights()
 					if turnlights>0 then
 						local turn = self:GetTurnSignal()
 						local emergency = self:GetEmergencySignal()
-					
+
 						if (turn>0 or emergency) and Trolleybus_System.TurnSignalTickActive(self) then
 							if (turn==1 or emergency) and #self.TurnSignalLeft>0 then
 								local alpha = self.TurnSignalLeft.brightness*turnlights*255
-							
+
 								for k,v in ipairs(self.TurnSignalLeft) do
 									DrawSprite(self,v.pos,v.size,COLOR_ORANGE,alpha,self.pix_viss.left,k)
 								end
 							end
-							
+
 							if (turn==2 or emergency) and #self.TurnSignalRight>0 then
 								local alpha = self.TurnSignalRight.brightness*turnlights*255
-							
+
 								for k,v in ipairs(self.TurnSignalRight) do
 									DrawSprite(self,v.pos,v.size,COLOR_ORANGE,alpha,self.pix_viss.right,k)
 								end
 							end
 						end
 					end
-					
+
 					local profilelights = self:GetProfileLights()
 					if profilelights>0 and #self.ProfileLights>0 then
 						local alpha = self.ProfileLights.brightness*profilelights*255
-					
+
 						for k,v in ipairs(self.ProfileLights) do
 							if !v.active or v.active(self) then
 								DrawSprite(self,v.pos,v.size,v.color,alpha,self.pix_viss.profile,k)
 							end
 						end
 					end
-					
+
 					local headlights = self:GetHeadLights()
 					if headlights>0 and self.HeadLights and #self.HeadLights>0 then
 						local alpha = self.HeadLights.brightness*headlights*255
-					
+
 						for k,v in ipairs(self.HeadLights) do
 							if !v.shouldbeactive or v.shouldbeactive(self) then
 								DrawSprite(self,v.pos,v.size,v.color,alpha,self.pix_viss.head,k)
 							end
 						end
 					end
-					
+
 					local roadtrainlights = self:GetRoadTrainLights()
 					if roadtrainlights>0 and self.RoadTrainLights and #self.RoadTrainLights>0 then
 						local alpha = self.RoadTrainLights.brightness*roadtrainlights*255
-					
+
 						for k,v in ipairs(self.RoadTrainLights) do
 							DrawSprite(self,v.pos,v.size,v.color,alpha,self.pix_viss.roadtrain,k)
 						end
 					end
-					
+
 					local rearlight = self:GetRearLight()
 					if rearlight>0 then
 						local rear = self:GetRearLights()
 						if rear>0 then
 							if (rear==1 or rear==3) and #self.BrakeLights>0 then
 								local alpha = self.BrakeLights.brightness*rearlight*255
-							
+
 								for k,v in ipairs(self.BrakeLights) do
 									DrawSprite(self,v.pos,v.size,COLOR_RED,alpha,self.pix_viss.brake,k)
 								end
 							end
-							
+
 							if (rear==2 or rear==3) and #self.BackwardMoveLights>0 then
 								local alpha = self.BackwardMoveLights.brightness*rearlight*255
-							
+
 								for k,v in ipairs(self.BackwardMoveLights) do
 									DrawSprite(self,v.pos,v.size,color_white,alpha,self.pix_viss.backmove,k)
 								end
@@ -501,37 +501,37 @@ local function DrawTrolleybusRenderables(depth,skybox,translucent)
 
 				if !translucent and class=="trolleybus_polecatcher" then
 					if self:IsDormant() then continue end
-					
+
 					local bus = self:GetTrolleybus()
-					
+
 					if IsValid(bus) and bus.PolesData then
 						local left = self:GetLeft()
 						local dt = bus.PolesData[left and "Left" or "Right"]
 						local endpos = dt.WheelPos
-						
+
 						if endpos then
 							if bus.TrolleyPoleCatcherWirePos then
 								endpos = LocalToWorld(bus.TrolleyPoleCatcherWirePos,angle_zero,dt.PolePos,dt.PoleAng)
 							end
-							
+
 							local startpos = self:GetPos()
 							local movingply = Entity(Trolleybus_System.NetworkSystem.GetNWVar(self,"MovingPly",0))
 							local color = render.GetLightColor(startpos):ToColor()
-							
+
 							render.SetMaterial(mat_polecatcherwire)
 							render.SetBlend(1)
 
 							if IsValid(movingply) and movingply:IsPlayer() then
 								local plypos = movingply:EyePos()+movingply:GetAimVector()*15
-								
+
 								if movingply!=LP then
 									local m = movingply:GetBoneMatrix(movingply:LookupBone("ValveBiped.Bip01_R_Hand") or 0)
-									
+
 									if m then
 										plypos = m:GetTranslation()+m:GetAngles():Forward()*3+m:GetAngles():Right()*2
 									end
 								end
-								
+
 								render.StartBeam(3)
 									render.AddBeam(startpos,0.7,0,color)
 									render.AddBeam(plypos,0.7,2.5,color)
@@ -539,29 +539,31 @@ local function DrawTrolleybusRenderables(depth,skybox,translucent)
 								render.EndBeam()
 							else
 								local limits = bus.TrolleyPoleCatcherWiresLimits
-								
+
 								if limits then
-									local center = limits.CenterPos+Vector(0,left and limits.CenterDist or -limits.CenterDist,0)
-									local bmin,bmax = limits.BoundMin,limits.BoundMax
-									
-									local lstartpos = bus:WorldToLocal(startpos)
-									local lendpos = bus:WorldToLocal(endpos)
-									
-									local deltah = lendpos.z-lstartpos.z
-									local limit_deltah = limits.CenterPos.z-lstartpos.z
-									local fr = limit_deltah/deltah
-									
-									local limitpos = lstartpos+(lendpos-lstartpos)*fr
-									limitpos.x = math.Clamp(limitpos.x,center.x+bmin.x,center.x+bmax.x)
-									limitpos.y = math.Clamp(limitpos.y,center.y+bmin.y,center.y+bmax.y)
-									
-									local wlimitpos = bus:LocalToWorld(limitpos)
-									
-									render.StartBeam(3)
-										render.AddBeam(startpos,0.7,0,color)
-										render.AddBeam(wlimitpos,0.7,2.5,color)
-										render.AddBeam(endpos,0.7,5,color)
-									render.EndBeam()
+									if !bus.NotPolesRope then
+										local center = limits.CenterPos+Vector(0,left and limits.CenterDist or -limits.CenterDist,0)
+										local bmin,bmax = limits.BoundMin,limits.BoundMax
+
+										local lstartpos = bus:WorldToLocal(startpos)
+										local lendpos = bus:WorldToLocal(endpos)
+
+										local deltah = lendpos.z-lstartpos.z
+										local limit_deltah = limits.CenterPos.z-lstartpos.z
+										local fr = limit_deltah/deltah
+
+										local limitpos = lstartpos+(lendpos-lstartpos)*fr
+										limitpos.x = math.Clamp(limitpos.x,center.x+bmin.x,center.x+bmax.x)
+										limitpos.y = math.Clamp(limitpos.y,center.y+bmin.y,center.y+bmax.y)
+
+										local wlimitpos = bus:LocalToWorld(limitpos)
+
+										render.StartBeam(3)
+											render.AddBeam(startpos,0.7,0,color)
+											render.AddBeam(wlimitpos,0.7,2.5,color)
+											render.AddBeam(endpos,0.7,5,color)
+										render.EndBeam()
+									end
 								else
 									render.DrawBeam(startpos,endpos,0.7,0,5,color)
 								end

@@ -25,6 +25,7 @@ AddCSLuaFile("contactnetwork.lua")
 AddCSLuaFile("cl_contactnetwork.lua")
 AddCSLuaFile("routes.lua")
 AddCSLuaFile("cl_routes.lua")
+AddCSLuaFile("g017skins.lua")
 
 if CLIENT then
 	include("language.lua")
@@ -39,6 +40,7 @@ include("network_vars.lua")
 include("skins.lua")
 include("contactnetwork.lua")
 include("routes.lua")
+include("g017skins.lua")
 
 if SERVER then
 	include("sv_util.lua")

@@ -51,7 +51,7 @@ ENT.PanelsData = {}
 
 function ENT:_SetupNameplates(color)
 	local clear1 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_rear",Vector(-369.61,-31.02,44.69),Angle(-4,-180,0),12,7,0,"Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.RearNumber",nil,nil,color,true)
-	local clear2 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_right",Vector(-258.51,-50.29,45.47),Angle(-4.7,-90,0),50.5,7.2,2,"Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.RouteNumber","Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.Route",10,color,true)
+	local clear2 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_right",Vector(-256.51,-50.29,45.47),Angle(-4.7,-90,0),50.5,7.2,2,"Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.RouteNumber","Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.Route",10,color,true)
 
 	local clear3 = Trolleybus_System.BuildInteriorNameplate(self,"int_nameplate",Vector(-100.35,21.34,43.8),Angle(0,-180,0),42.8,2.8,function(self)
 		local bus = self:GetTrolleybus()

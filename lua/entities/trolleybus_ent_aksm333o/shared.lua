@@ -999,7 +999,7 @@ Trolleybus_System.BuildMultiButton(ENT,"driverseat_heater","leftprib","trolleybu
 },3.15,4.52,1.3,1.5,function(self,ent,state) return state/6 end,nil,nil,false,nil,nil,0,6)
 
 local function SetupNameplates(self,color)
-	local clear1 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_front",Vector(339.51,-33.66,43.94),Angle(0,0,0),67.3,9,2,"Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.RouteNumber","Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.Route",8,color,true)
+	local clear1 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_front",Vector(339.51,-30.66,43.94),Angle(0,0,0),67.3,9,2,"Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.RouteNumber","Trolleybus_System.Trolleybus.AKSM333o.RouteDisplay.Route",8,color,true)
 	
 	local clear2 = Trolleybus_System.BuildInteriorNameplate(self,"int_nameplate",Vector(253.02,16.2,43.82),Angle(0,-180,0),42.9,2.9,function(self)
 		if !self:GetNWVar("LowPower") then return end
