@@ -936,7 +936,7 @@ Trolleybus_System.BuildMultiButton(ENT,"guitar_right","guitar_right","trolleybus
 },0,0,4,6,function(self,ent,state) return state==-1 and 0 or state==1 and 1 or 0.5 end)
 
 local function SetupNameplates(self,color)
-	Trolleybus_System.BuildNameplatePanel(self,"nameplate_front",Vector(344.3,-33.64,46.08),Angle(0,0,0),67,9,2,"Trolleybus_System.Trolleybus.AKSM333.RouteDisplay.RouteNumber","Trolleybus_System.Trolleybus.AKSM333.RouteDisplay.Route",8,color,true)
+	Trolleybus_System.BuildNameplatePanel(self,"nameplate_front",Vector(344.3,-31,46.08),Angle(0,0,0),67,9,2,"Trolleybus_System.Trolleybus.AKSM333.RouteDisplay.RouteNumber","Trolleybus_System.Trolleybus.AKSM333.RouteDisplay.Route",8,color,true)
 	
 	Trolleybus_System.BuildInteriorNameplate(self,"int_nameplate",Vector(257.7,14.51,45.35),Angle(0,-180,-2),42.7,2.7,function(self)
 		if !self:GetNWVar("LowPower") then return end

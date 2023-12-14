@@ -985,8 +985,8 @@ Trolleybus_System.BuildMultiButton(ENT,"driverseat_heater","leftprib","trolleybu
 },3.17,4.56,1.3,1.5,function(self,ent,state) return state/6 end,nil,nil,false,nil,nil,0,6)
 
 local function SetupNameplates(self,color)
-	local clear1 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_front",Vector(228.86,-33.49,45.84),Angle(0,0,0),67,9,2,"Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Name",8,color,true)
-	local clear2 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_right",Vector(-136.17,-50.23,47.52),Angle(-5,-90,0),60,8,2,"Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Name",10,color,true)
+	local clear1 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_front",Vector(228.86,-31.52,45.84),Angle(0,0,0),67,9,2,"Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Name",8,color,true)
+	local clear2 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_right",Vector(-134.06,-50.19,47.52),Angle(-5,-90,0),60,8,2,"Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.Name",10,color,true)
 	local clear3 = Trolleybus_System.BuildNameplatePanel(self,"nameplate_rear",Vector(-235.4,-30.53,47.12),Angle(-4.3,180,0),13,7,0,"Trolleybus_System.Trolleybus.AKSM321.RouteDisplay.RearNumber",nil,nil,color,true)
 	
 	local clear4 = Trolleybus_System.BuildInteriorNameplate(self,"int_nameplate",Vector(142.62,14.53,45.16),Angle(0,-180,-1.8),42.7,3,function(self)

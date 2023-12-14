@@ -922,8 +922,8 @@ Trolleybus_System.BuildMultiButton(ENT,"guitar_right","guitar_right","trolleybus
 	maxdrawdistance = 200,
 },0,0,4,6,function(self,ent,state) return state==-1 and 0 or state==1 and 1 or 0.5 end)
 
-Trolleybus_System.BuildNameplatePanel(ENT,"nameplate_front",Vector(229.13,-33.52,41.32),Angle(0,0,0),67,9,2,"Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Name",8,Color(255,155,0),true)
-Trolleybus_System.BuildNameplatePanel(ENT,"nameplate_right",Vector(-136.06,-50.19,42.99),Angle(-4.1,-90,0),60,8,2,"Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Name",10,Color(255,155,0),true)
+Trolleybus_System.BuildNameplatePanel(ENT,"nameplate_front",Vector(229.13,-31.52,41.32),Angle(0,0,0),67,9,2,"Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Name",8,Color(255,155,0),true)
+Trolleybus_System.BuildNameplatePanel(ENT,"nameplate_right",Vector(-134.06,-50.19,42.99),Angle(-4.1,-90,0),60,8,2,"Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Number","Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.Name",10,Color(255,155,0),true)
 Trolleybus_System.BuildNameplatePanel(ENT,"nameplate_rear",Vector(-235.47,-30.91,42.04),Angle(-4.6,-180,0),13,7,0,"Trolleybus_System.Trolleybus.AKSM321n.RouteDisplay.RearNumber",nil,nil,Color(255,155,0),true)
 	
 Trolleybus_System.BuildInteriorNameplate(ENT,"int_nameplate",Vector(142.7,14.53,40.6),Angle(0,-180,-1.9),42.7,3,function(self)
